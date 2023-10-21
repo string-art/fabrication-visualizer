@@ -3,15 +3,6 @@ const n = 10;
 const width = 66.0;
 const spacing = 6.29;
 
-// Initialize Three.js
-const scene = new THREE.Scene();
-const fov = Math.atan(0.5) * 180 / Math.PI * 2;
-const camera = new THREE.PerspectiveCamera(fov, window.innerWidth / window.innerHeight, 1, 1000);
-const renderer = new THREE.WebGLRenderer();
-renderer.setClearColor(0xffffff, 0);
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
-
 // Create a box with five faces of nails
 const nails = [];
 const offset = width / 2;
@@ -54,13 +45,47 @@ function indicesToLabels(nails, n, indices) {
     return indices.map(i => indexToLabel(nails, n, i));
 }
 
+// Initialize Three.js
+const renderer = new THREE.WebGLRenderer();
+renderer.setClearColor(0xffffff, 0);
+renderer.setSize(window.innerWidth, window.innerHeight); // TODO: adjust sizing
+document.body.appendChild(renderer.domElement);
+
+const fov = Math.atan(0.5) * 180 / Math.PI * 2;
+const camera = new THREE.PerspectiveCamera(fov, window.innerWidth / window.innerHeight, 1, 1000); // TODO: adjust sizing
+camera.position.set(0, 0, width * 2);
+camera.lookAt(0, 0, 0);
+
+const scene = new THREE.Scene();
+
 // Add the nails to the scene
 const geometry = new THREE.BufferGeometry().setFromPoints(nails);
 const material = new THREE.PointsMaterial({ color: 0xff0000 });
 const pointsObject = new THREE.Points(geometry, material);
 scene.add(pointsObject);
 
-camera.position.z = width * 2;
+// Add the threads to the scene
+const points = [];
+points.push(new THREE.Vector3(0, 0, 0));
+points.push(new THREE.Vector3(100, 100, 100));
+const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
+const line = new MeshLine();
+line.setGeometry(lineGeometry);
+
+const resolution = new THREE.Vector2
+renderer.getSize(resolution)
+const material2 = new MeshLineMaterial({
+    color: new THREE.Color(0x000000),
+    transparent: true,
+    opacity: 0.9,
+    sizeAttenuation: true,
+    lineWidth: 0.1,
+    depthTest: false,
+    resolution: resolution,
+    alphaTest: 0.5
+});
+const linesObject = new THREE.Mesh(line, material2);
+scene.add(linesObject);
 
 // Add an axes helper
 const axesHelper = new THREE.AxesHelper(5);
