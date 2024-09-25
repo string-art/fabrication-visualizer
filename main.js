@@ -31,7 +31,7 @@ function createFaceOfNails(nx, ny, dx, dy, rx, ry, offset) {
 }
 
 // TODO: test!
-function indexToLabel(nails, n, i) {
+function indexToLabel(n, i) {
     // Assume five faces of nails
     const faceNum = Math.floor(i / (n * n));
     const indexInFace = i % (n * n);
@@ -41,8 +41,8 @@ function indexToLabel(nails, n, i) {
 }
 
 // TODO: new line every 10 labels
-function indicesToLabels(nails, n, indices) {
-    return indices.map(i => indexToLabel(nails, n, i));
+function indicesToLabels(n, indices) {
+    return indices.map(i => indexToLabel(n, i));
 }
 
 // Initialize Three.js
@@ -66,8 +66,8 @@ scene.add(pointsObject);
 
 // Add the threads to the scene
 const points = [];
-points.push(new THREE.Vector3(0, 0, 0));
-points.push(new THREE.Vector3(100, 100, 100));
+points.push(new THREE.Vector3(-10, -10, -10));
+points.push(new THREE.Vector3(10, 10, 10));
 const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
 const line = new MeshLine();
 line.setGeometry(lineGeometry);
@@ -79,8 +79,8 @@ const material2 = new MeshLineMaterial({
     transparent: true,
     opacity: 0.9,
     sizeAttenuation: true,
-    lineWidth: 0.1,
-    depthTest: false,
+    lineWidth: 1,
+    // depthTest: false,
     resolution: resolution,
     alphaTest: 0.5
 });
@@ -94,7 +94,7 @@ scene.add(axesHelper);
 // Render the scene
 function animate() {
     requestAnimationFrame(animate);
-    // pointsObject.rotation.y += 0.005;
+    pointsObject.rotation.y += 0.005;
     renderer.render(scene, camera);
 }
 
