@@ -1,3 +1,7 @@
+import * as THREE from 'three';
+
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
 // Dimensions (in cm)
 const n = 10;
 const width = 66.0;
@@ -20,7 +24,7 @@ function createFaceOfNails(nx, ny, dx, dy, rx, ry, offset) {
     // Create grid of points, row by row
     for (let y = 0; y < ny; y++) {
         for (let x = 0; x < nx; x++) {
-            point = new THREE.Vector3(startX + x * dx, startY + y * dy, 0);
+            let point = new THREE.Vector3(startX + x * dx, startY + y * dy, 0);
             point.applyAxisAngle(new THREE.Vector3(1, 0, 0), rx); // rotation about x axis
             point.applyAxisAngle(new THREE.Vector3(0, 1, 0), ry); // rotation about y axis
             point.add(offset); // offset
@@ -64,38 +68,22 @@ const material = new THREE.PointsMaterial({ color: 0xff0000 });
 const pointsObject = new THREE.Points(geometry, material);
 scene.add(pointsObject);
 
-// Add the threads to the scene
-const points = [];
-points.push(new THREE.Vector3(-10, -10, -10));
-points.push(new THREE.Vector3(10, 10, 10));
-const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
-const line = new MeshLine();
-line.setGeometry(lineGeometry);
-
-const resolution = new THREE.Vector2
-renderer.getSize(resolution)
-const material2 = new MeshLineMaterial({
-    color: new THREE.Color(0x000000),
-    transparent: true,
-    opacity: 0.9,
-    sizeAttenuation: true,
-    lineWidth: 1,
-    // depthTest: false,
-    resolution: resolution,
-    alphaTest: 0.5
-});
-const linesObject = new THREE.Mesh(line, material2);
-scene.add(linesObject);
-
 // Add an axes helper
 const axesHelper = new THREE.AxesHelper(5);
 scene.add(axesHelper);
 
-// Render the scene
+// Create and configure OrbitControls
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; // Enables inertia for smooth controls
+controls.dampingFactor = 0.05; // Adjust for how smooth the motion is
+controls.screenSpacePanning = false; // Set to true if you want to pan up/down or left/right
+
+// Create an animation loop to update controls and render the scene
 function animate() {
     requestAnimationFrame(animate);
-    pointsObject.rotation.y += 0.005;
+    controls.update(); // Only required if controls.enableDamping = true, or if auto-rotate is enabled
     renderer.render(scene, camera);
 }
 
+// Start the animation loop
 animate();
