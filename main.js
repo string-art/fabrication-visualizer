@@ -3,8 +3,8 @@ import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitC
 
 // Nail box (in cm)
 const n = 10;
-const cubeSize = 66.0;
-const spacing = 6.29;
+const cubeSize = 47.3;
+const spacing = 4.3;
 const offset = cubeSize / 2;
 
 const nails = [];

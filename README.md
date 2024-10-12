@@ -1,6 +1,6 @@
 # Fabrication Notes
 
-To start the development server run
+To start the development server, run:
 ```
 npx vite
 ```
@@ -12,6 +12,8 @@ Labeling of the faces and their orientations:
 ![orientation](figures/orientation.jpg)
 
 ---
+
+## Icebox
 
 Specifications of Alfonso's setup:
 ![dimensions](figures/dimensions.png)
