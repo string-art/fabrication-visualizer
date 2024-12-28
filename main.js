@@ -8,6 +8,7 @@ const spacing = 4.3;
 const offset = cubeSize / 2;
 
 const nails = [];
+const nailColors = [];
 
 // Camera
 const imgWidth = 800;     // determines aspect ratio
@@ -18,14 +19,15 @@ const verticalPadding = cubeSize / 2;
 
 // Create faces of nails
 {
-    nails.push(...createFaceOfNails(n, n, spacing, spacing, -Math.PI / 2, 0, new THREE.Vector3(0, offset, 0)));    // (F1) top face
-    nails.push(...createFaceOfNails(n, n, spacing, spacing, 0, Math.PI / 2, new THREE.Vector3(offset, 0, 0)));     // (F2) right face
-    nails.push(...createFaceOfNails(n, n, spacing, spacing, Math.PI / 2, 0, new THREE.Vector3(0, -offset, 0)));    // (F3) bottom face
-    nails.push(...createFaceOfNails(n, n, spacing, spacing, 0, -Math.PI / 2, new THREE.Vector3(-offset, 0, 0)));   // (F4) left face
-    nails.push(...createFaceOfNails(n, n, spacing, spacing, 0, Math.PI, new THREE.Vector3(0, 0, -offset)));        // (F5) back face
+    createFaceOfNails(n, n, spacing, spacing, -Math.PI / 2, 0, new THREE.Vector3(0, offset, 0));    // (F1) top face
+    createFaceOfNails(n, n, spacing, spacing, 0, Math.PI / 2, new THREE.Vector3(offset, 0, 0));     // (F2) right face
+    createFaceOfNails(n, n, spacing, spacing, Math.PI / 2, 0, new THREE.Vector3(0, -offset, 0));    // (F3) bottom face
+    createFaceOfNails(n, n, spacing, spacing, 0, -Math.PI / 2, new THREE.Vector3(-offset, 0, 0));   // (F4) left face
+    createFaceOfNails(n, n, spacing, spacing, 0, Math.PI, new THREE.Vector3(0, 0, -offset));        // (F5) back face
 
     function createFaceOfNails(nx, ny, dx, dy, rx, ry, offset) {
         const points = [];
+        const colors = [];
         const startX = -(nx - 1) * dx / 2;
         const startY = -(ny - 1) * dy / 2;
         // Create grid of points, row by row
@@ -36,15 +38,25 @@ const verticalPadding = cubeSize / 2;
                 point.applyAxisAngle(new THREE.Vector3(0, 1, 0), ry);
                 point.add(offset);
                 points.push(point);
+
+                // Determine color
+                if (y === 0 && x >= 1) {
+                    colors.push(new THREE.Color(0xff0000)); // red for nails on the first row (x)
+                } else if (x === 0 && y >= 1) {
+                    colors.push(new THREE.Color(0x00ff00)); // green for nails on the first column (y)
+                } else {
+                    colors.push(new THREE.Color(0x000000)); // Default black color
+                }
             }
         }
-        return points;
+        nails.push(...points);
+        nailColors.push(...colors);
     }
 }
 
 // Set up
 const renderer = new THREE.WebGLRenderer();
-renderer.setClearColor(0x000000, 1);
+renderer.setClearColor(0xf0f0f0, 1); // Change background to very light grey
 renderer.setSize(imgWidth, imgHeight);
 document.body.appendChild(renderer.domElement);
 
@@ -58,7 +70,8 @@ const scene = new THREE.Scene();
 
 // Add nails to scene
 const geometry = new THREE.BufferGeometry().setFromPoints(nails);
-const material = new THREE.PointsMaterial({ color: 0xff0000 });
+geometry.setAttribute('color', new THREE.Float32BufferAttribute(nailColors.flatMap(color => color.toArray()), 3));
+const material = new THREE.PointsMaterial({ vertexColors: true, size: 2 }); // Increase size of points
 const pointsObject = new THREE.Points(geometry, material);
 scene.add(pointsObject);
 
