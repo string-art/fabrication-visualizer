@@ -2,11 +2,25 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css" />
     <title>String Art: Fab Sketch</title>
   </head>
   <body>
     <div class="container">
+      <div class="controls">
+        <input type="file" id="sequenceFile" accept=".txt" title="Upload sequence file">
+        <div class="navigation">
+          <button id="prevButton" title="Previous step">Previous</button>
+          <span id="stepCounter">Step: 0/0</span>
+          <button id="nextButton" title="Next step">Next</button>
+          <div class="show-all">
+            <input type="checkbox" id="showAllSegments">
+            <label for="showAllSegments">Show all prior segments</label>
+          </div>
+        </div>
+      </div>
+      <div id="canvas-container"></div>
       <script type="module" src="main.js"></script>
     </div>
   </body>
