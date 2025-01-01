@@ -4,6 +4,12 @@ To start the development server, run:
 ```
 npx vite
 ```
+To build for production, run:
+```
+ npx vite build
+```
+
+---
 
 New fabrication setup:
 ![specification](figures/specification.png)
