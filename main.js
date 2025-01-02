@@ -204,6 +204,20 @@ function updateLineVisualization() {
     }
 }
 
+function updateInstructions() {
+    const instructionElement = document.getElementById('instructionText');
+    if (currentSegmentIndex < 0 || currentSegmentIndex >= lineSegments.length) {
+        instructionElement.textContent = "No thread instruction available.";
+        return;
+    }
+
+    const segment = lineSegments[currentSegmentIndex];
+    const startNail = segment[0];
+    const endNail = segment[1];
+
+    instructionElement.textContent = `(F${startNail.face}, R${startNail.row}, C${startNail.col}) to (F${endNail.face}, R${endNail.row}, C${endNail.col})`;
+}
+
 function updateStepCounter() {
     const counter = document.getElementById('stepCounter');
     counter.textContent = `Step: ${currentSegmentIndex + 1}/${lineSegments.length}`;
@@ -225,6 +239,7 @@ function handleNext() {
     if (currentSegmentIndex < lineSegments.length - 1) {
         currentSegmentIndex++;
         updateLineVisualization();
+        updateInstructions();
         updateStepCounter();
     }
 }
@@ -233,6 +248,7 @@ function handlePrev() {
     if (currentSegmentIndex >= 0) {
         currentSegmentIndex--;
         updateLineVisualization();
+        updateInstructions();
         updateStepCounter();
     }
 }
