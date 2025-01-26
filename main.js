@@ -215,7 +215,7 @@ function updateInstructions() {
     const startNail = segment[0];
     const endNail = segment[1];
 
-    instructionElement.textContent = `(F${startNail.face}, R${startNail.row}, C${startNail.col}) to (F${endNail.face}, R${endNail.row}, C${endNail.col})`;
+    instructionElement.textContent = `(F${startNail.face}, R${startNail.row+1}, C${startNail.col+1}) to (F${endNail.face}, R${endNail.row+1}, C${endNail.col+1})`;
 }
 
 function updateStepCounter() {
