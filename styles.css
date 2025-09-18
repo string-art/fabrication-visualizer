@@ -129,3 +129,55 @@ button:active {
     font-size: 0.95em;
     color: #333;
 }
+
+/* Legend styling */
+.legend {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    width: fit-content;
+}
+
+.legend h3 {
+    margin: 0 0 15px 0;
+    color: #333;
+}
+
+.legend ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.legend li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.color-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.color-dot.origin {
+    background-color: #964B00;
+}
+
+.color-dot.x-axis {
+    background-color: #ff0000;
+}
+
+.color-dot.y-axis {
+    background-color: #00ff00;
+}
+
+.color-dot.regular {
+    background-color: #000000;
+}

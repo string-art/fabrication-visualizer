@@ -24,7 +24,7 @@ function createNailFaces() {
     createFaceOfNails(n, n, spacing, spacing, -Math.PI / 2, 0, new THREE.Vector3(0, offset, 0));    // (F1) top face
     createFaceOfNails(n, n, spacing, spacing, 0, Math.PI / 2, new THREE.Vector3(offset, 0, 0));     // (F2) right face
     createFaceOfNails(n, n, spacing, spacing, Math.PI / 2, 0, new THREE.Vector3(0, -offset, 0));    // (F3) bottom face
-    // createFaceOfNails(n, n, spacing, spacing, 0, -Math.PI / 2, new THREE.Vector3(-offset, 0, 0));   // (F4) left face
+    createFaceOfNails(n, n, spacing, spacing, 0, -Math.PI / 2, new THREE.Vector3(-offset, 0, 0));   // (F4) left face
     createFaceOfNails(n, n, spacing, spacing, 0, Math.PI, new THREE.Vector3(0, 0, -offset));        // (F5) back face
 }
 
@@ -66,7 +66,7 @@ container.appendChild(renderer.domElement);
 // Set up camera
 const fov = Math.atan((cubeSize + 2 * verticalPadding) / (2 * (distanceFromCube + cubeSize * 0.5))) * 180 / Math.PI * 2;
 const camera = new THREE.PerspectiveCamera(fov, imgWidth / imgHeight, 1, 1000);
-camera.position.set(0, 0, distanceFromCube + cubeSize * 0.5);
+camera.position.set(0, distanceFromCube + cubeSize * 0.5, 0);
 camera.lookAt(0, 0, 0);
 
 function onWindowResize() {
