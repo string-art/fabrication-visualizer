@@ -1,10 +1,10 @@
-import * as THREE from './node_modules/three/build/three.module.js';
-import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls.js'
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 // Nail box (in cm)
-const n = 10;
+const n = 20;
 const cubeSize = 47.3;
-const spacing = 4.3;
+const spacing = 2.15;
 const offset = cubeSize / 2;
 
 const nails = [];
@@ -66,7 +66,7 @@ container.appendChild(renderer.domElement);
 // Set up camera
 const fov = Math.atan((cubeSize + 2 * verticalPadding) / (2 * (distanceFromCube + cubeSize * 0.5))) * 180 / Math.PI * 2;
 const camera = new THREE.PerspectiveCamera(fov, imgWidth / imgHeight, 1, 1000);
-camera.position.set(0, distanceFromCube + cubeSize * 0.5, 0);
+camera.position.set(0, 0, distanceFromCube + cubeSize * 0.5);
 camera.lookAt(0, 0, 0);
 
 function onWindowResize() {
@@ -101,6 +101,9 @@ const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.05;
 controls.screenSpacePanning = false;
+controls.target.set(0, 0, 0);
+controls.minDistance = cubeSize;
+controls.maxDistance = distanceFromCube * 2;
 
 function animate() {
     requestAnimationFrame(animate);
