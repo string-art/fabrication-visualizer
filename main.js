@@ -224,6 +224,10 @@ function updateInstructions() {
 function updateStepCounter() {
     const counter = document.getElementById('stepCounter');
     counter.textContent = `Step: ${currentSegmentIndex + 1}/${lineSegments.length}`;
+
+    // Update the max value for the jump input
+    const jumpInput = document.getElementById('jumpToStep');
+    jumpInput.max = lineSegments.length;
 }
 
 // Modify the keyboard event listeners and add button listeners
@@ -256,6 +260,31 @@ function handlePrev() {
     }
 }
 
+function handleJump() {
+    const jumpInput = document.getElementById('jumpToStep');
+    const stepNumber = parseInt(jumpInput.value);
+
+    // Validate the input
+    if (isNaN(stepNumber)) {
+        alert('Please enter a valid step number.');
+        return;
+    }
+
+    if (stepNumber < 1 || stepNumber > lineSegments.length) {
+        alert(`Please enter a step number between 1 and ${lineSegments.length}.`);
+        return;
+    }
+
+    // Jump to the step (stepNumber - 1 because array is 0-indexed)
+    currentSegmentIndex = stepNumber - 1;
+    updateLineVisualization();
+    updateInstructions();
+    updateStepCounter();
+
+    // Clear the input field
+    jumpInput.value = '';
+}
+
 // Add these event listeners after scene setup
 document.getElementById('sequenceFile').addEventListener('change', (event) => {
     const file = event.target.files[0];
@@ -266,6 +295,14 @@ document.getElementById('sequenceFile').addEventListener('change', (event) => {
 
 document.getElementById('prevButton').addEventListener('click', handlePrev);
 document.getElementById('nextButton').addEventListener('click', handleNext);
+document.getElementById('jumpButton').addEventListener('click', handleJump);
+
+// Allow pressing Enter in the jump input field
+document.getElementById('jumpToStep').addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') {
+        handleJump();
+    }
+});
 
 // Add this after your existing event listeners
 document.getElementById('showAllSegments').addEventListener('change', (event) => {
