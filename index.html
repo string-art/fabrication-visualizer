@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>String Art: Fab Sketch</title>
-    <script type="module" crossorigin src="/fabrication-visualizer/assets/index-i6kkVTGd.js"></script>
-    <link rel="stylesheet" crossorigin href="/fabrication-visualizer/assets/index-DDQSPIIc.css">
+    <script type="module" crossorigin src="/fabrication-visualizer/assets/index-B76L9rmE.js"></script>
+    <link rel="stylesheet" crossorigin href="/fabrication-visualizer/assets/index-CG_7CTm0.css">
   </head>
   <body>
     <div class="container">
@@ -15,6 +15,11 @@
           <button id="prevButton" title="Previous step">Previous</button>
           <span id="stepCounter">Step: 0/0</span>
           <button id="nextButton" title="Next step">Next</button>
+          <div class="jump-to">
+            <label for="jumpToStep">Jump to step:</label>
+            <input type="number" id="jumpToStep" min="1" placeholder="1">
+            <button id="jumpButton" title="Jump to step">Go</button>
+          </div>
           <div class="show-all">
             <input type="checkbox" id="showAllSegments">
             <label for="showAllSegments">Show all prior segments</label>
